@@ -1,3 +1,3 @@
 export const keys = {
-  mongoURI: 'mongodb://connector:connector123@ds117489.mlab.com:17489/connector'
+  mongoURI: 'mongodb://user:user123@ds117489.mlab.com:17489/connector'
 }
