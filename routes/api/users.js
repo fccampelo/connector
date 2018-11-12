@@ -1,6 +1,10 @@
+import jtw from 'jsonwebtoken';
+import bcrypt from 'bcrypt'; 
 import express from 'express';
 import gravatar from 'gravatar';
-import bcrypt from 'bcrypt'; 
+
+//import Keys 
+import { keys } from '../../config/keys';
 
 //import Model user
 import User from '../../models/User';
@@ -43,6 +47,43 @@ router.post('/register', (req, res) => {
     })
 
 });
+
+/**
+ * @route Post api/users/login
+ * @desc Login User / 
+ * @access Public
+ * @returns JWT Token
+ */
+router.post('/login', (req, res) => {
+  let { email, password } = req.body;
+
+  password = JSON.stringify(password);
+
+  User.findOne({ email })
+    .then(user => {
+      if(!user) return res.status(404).json({email: 'User not found' });
+      
+        bcrypt
+        .compare(password, user.password)
+          .then(isMatch => { 
+            if(isMatch) {
+              const payload = { id: user.id, name: user.name, avatar: user.avatar }
+
+              jtw.sign(payload, keys.secretOrKeys, {expiresIn: 3600}, ((err, token) => {
+                res.json({
+                  success: true,
+                  token: 'Bearer' + token
+                })
+              }))
+        
+            } else {
+              res.status(400).json({password: 'Password incorret'})
+            } 
+
+          });
+    })
+
+})
 
 
 export default router;
