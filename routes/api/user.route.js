@@ -1,18 +1,10 @@
 import express from "express";
+import passport from "passport";
 
 //import Controllers
 import User from "../../controllers/user.controller";
 
-import passport from "passport";
-
 const router = express.Router();
-
-/**
- * @route Get api/users/test
- * @desc Test users route
- * @access Public
- */
-router.get("/test", (req, res) => res.json({ msg: "Users working" }));
 
 /**
  * @route Post api/users/register
