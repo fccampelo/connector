@@ -1,9 +1,11 @@
 import express from "express";
 import mongoose from "mongoose";
+import passport from "passport";
 import bodyParser from "body-parser";
 
 //config
 import { keys } from "./config/keys";
+import passportConfig from "./config/passaport";
 
 //route
 import users from "./routes/api/user.route";
@@ -20,7 +22,11 @@ mongoose
   .then(() => console.log("Conexão realizada com sucesso"))
   .catch(err => console.log(err));
 
-app.get("/", (req, res) => res.send("hello"));
+//Passport middlewere;
+app.use(passport.initialize());
+
+//Passaport Config
+passportConfig(passport);
 
 // Use Routes
 app.use("/api/users", users);
