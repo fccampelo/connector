@@ -12,9 +12,7 @@ import User from "../models/User.model";
 let user = {};
 
 /**
- * @route Post api/users/register
  * @desc Register User
- * @access Public
  */
 user.register = (req, res) => {
   const { email, name, password } = req.body;
@@ -40,9 +38,7 @@ user.register = (req, res) => {
 };
 
 /**
- * @route Post api/users/login
  * @desc Login User /
- * @access Public
  * @returns JWT Token
  */
 user.login = (req, res) => {
@@ -64,7 +60,7 @@ user.login = (req, res) => {
           (err, token) => {
             res.json({
               success: true,
-              token: "Bearer" + token
+              token: "Bearer " + token
             });
           }
         );
@@ -73,6 +69,14 @@ user.login = (req, res) => {
       }
     });
   });
+};
+
+/**
+ * @desc get info current
+ * @returns User current
+ */
+user.current = (req, res) => {
+  res.json(req.user);
 };
 
 export default user;

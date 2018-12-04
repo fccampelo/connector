@@ -3,6 +3,8 @@ import express from "express";
 //import Controllers
 import User from "../../controllers/user.controller";
 
+import passport from "passport";
+
 const router = express.Router();
 
 /**
@@ -26,5 +28,16 @@ router.post("/register", User.register);
  * @returns JWT Token
  */
 router.post("/login", User.login);
+
+/**
+ * @route Get api/users/current
+ * @desc get user current
+ * @access Private
+ */
+router.get(
+  "/current",
+  passport.authenticate("jwt", { session: false }),
+  User.current
+);
 
 export default router;
