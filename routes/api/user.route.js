@@ -25,7 +25,6 @@ router.post("/register", User.register);
  * @route Post api/users/login
  * @desc Login User /
  * @access Public
- * @returns JWT Token
  */
 router.post("/login", User.login);
 

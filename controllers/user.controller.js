@@ -6,8 +6,10 @@ import gravatar from "gravatar";
 import { keys } from "../config/keys";
 
 //import Model user
-
 import User from "../models/User.model";
+
+//import Validate
+import validateRegisterInput from "../validator/register.validator";
 
 let user = {};
 
@@ -15,6 +17,11 @@ let user = {};
  * @desc Register User
  */
 user.register = (req, res) => {
+  const { errors, isValid } = validateRegisterInput(req.body);
+
+  //checks for errors and returns errors found
+  if (!isValid) return res.status(400).json(errors);
+
   const { email, name, password } = req.body;
 
   User.findOne({ email }).then(user => {
