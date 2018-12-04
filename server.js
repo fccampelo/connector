@@ -9,6 +9,7 @@ import passportConfig from "./config/passaport";
 
 //route
 import users from "./routes/api/user.route";
+import profile from "./routes/api/profile.route";
 
 const app = express();
 
@@ -30,6 +31,7 @@ passportConfig(passport);
 
 // Use Routes
 app.use("/api/users", users);
+app.use("/api/profile", profile);
 
 const port = process.env.PORT || 5000;
 
