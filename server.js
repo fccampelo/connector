@@ -1,12 +1,12 @@
-import express from 'express';
-import mongoose from 'mongoose';
-import bodyParser from 'body-parser';
+import express from "express";
+import mongoose from "mongoose";
+import bodyParser from "body-parser";
 
 //config
-import { keys } from './config/keys';
+import { keys } from "./config/keys";
 
 //route
-import users from './routes/api/users';
+import users from "./routes/api/user.route";
 
 const app = express();
 
@@ -17,15 +17,14 @@ app.use(bodyParser.json());
 //conenct to MongoDB
 mongoose
   .connect(keys.mongoURI)
-  .then(() => console.log('Conexão realizada com sucesso'))
-  .catch((err) => console.log(err))
+  .then(() => console.log("Conexão realizada com sucesso"))
+  .catch(err => console.log(err));
 
-app.get('/', (req, res) => res.send('hello'));
+app.get("/", (req, res) => res.send("hello"));
 
 // Use Routes
-app.use('/api/users', users);
+app.use("/api/users", users);
 
 const port = process.env.PORT || 5000;
 
-app.listen(port, () => console.log('o servido estar rodando na pota ' + port));
-
+app.listen(port, () => console.log("o servido estar rodando na pota " + port));
