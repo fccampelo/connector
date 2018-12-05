@@ -4,7 +4,7 @@ class Profile extends Schema {
   constructor() {
     super({
       user: { type: Schema.Types.ObjectId, ref: "User" },
-      handle: { type: String, required: true, max: 40 },
+      handle: { type: String, required: true, unique: true, max: 40 },
       company: { type: String },
       website: { type: String },
       location: { type: String },

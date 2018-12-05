@@ -26,6 +26,7 @@ profile.getInfoUserCurrent = (req, res) => {
 profile.create = (req, res) => {
   const profileFilds = req.body;
 
+  const data = [];
   profileFilds.user = req.user.id;
 
   Profile.findOne({ user: profileFilds.user }).then(profile => {
@@ -35,7 +36,10 @@ profile.create = (req, res) => {
       const newProfile = new Profile(profileFilds);
       newProfile
         .save()
-        .then(profile => res.json(profile))
+        .then(profile => {
+          data.push(profile);
+          res.status(201).json(data);
+        })
         .catch(err => console.log(err));
     }
   });
@@ -63,6 +67,57 @@ profile.patch = (req, res) => {
         .catch(err => res.status(400).json(err));
     }
   });
+};
+
+/**
+ * @desc get Handle
+ */
+profile.getHandle = (req, res) => {
+  const errors = {};
+  const { handle } = req.params;
+  Profile.findOne({ handle })
+    .populate("user", ["name", "avatar"])
+    .then(profile => {
+      if (!profile) {
+        errors.noprofile = "Este não é um perfil de um usuário";
+        res.status(404).json(errors);
+      }
+      res.json(profile);
+    })
+    .catch(err => res.status(404).json(err));
+};
+
+/**
+ * @desc find the profile with id
+ */
+profile.getProfile = (req, res) => {
+  const errors = {};
+  const { user_id } = req.params;
+  Profile.findOne({ user: user_id })
+    .populate("user", ["name", "avatar"])
+    .then(profile => {
+      if (!profile) {
+        errors.noprofile = "Este não é um perfil de um usuário";
+        res.status(404).json(errors);
+      }
+      res.json(profile);
+    })
+    .catch(err => res.status(404).json(err));
+};
+
+/**
+ * @desc find all profile
+ */
+profile.getAllProfile = (req, res) => {
+  const errors = {};
+  const result = {};
+  Profile.find()
+    .populate("user", ["name", "avatar"])
+    .then(profile => {
+      result.data = profile;
+      res.status(200).json(result);
+    })
+    .catch(err => res.status(404).json(err));
 };
 
 export default profile;

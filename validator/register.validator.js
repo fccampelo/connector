@@ -22,8 +22,6 @@ const validateRegisterInput = ({
     ? passwordConfirmation
     : "";
 
-  console.log(isEmpty(email));
-
   if (!isLength(name, { min: 3, max: 50 })) {
     errors.name = "O nome do usuário precisa ter entre 3 a 50 caracters";
   }
