@@ -8,6 +8,7 @@ import { keys } from "./config/keys";
 import passportConfig from "./config/passaport";
 
 //route
+import post from "./routes/api/post.route";
 import users from "./routes/api/user.route";
 import profile from "./routes/api/profile.route";
 
@@ -32,6 +33,7 @@ passportConfig(passport);
 // Use Routes
 app.use("/api/users", users);
 app.use("/api/profile", profile);
+app.use("/api/post", post);
 
 const port = process.env.PORT || 5000;
 
